@@ -8,7 +8,6 @@ const logo = require("./logo.svg");
 
 class App extends React.Component {
     render() {
-
         function saveData(formData: IFormData) {
             console.log(formData);
         }
@@ -20,7 +19,8 @@ class App extends React.Component {
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
                 <div className="App-intro">
-                    <Form saveData={saveData}/>
+                    <Form saveData={saveData} />
+                    {/* <List /> */}
                 </div>
             </div>
         );
