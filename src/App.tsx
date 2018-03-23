@@ -3,6 +3,7 @@ import "./App.css";
 import IFormData from "./interfaces/IFormData";
 
 import Form from "./Form";
+import List from "./List";
 
 const logo = require("./logo.svg");
 
@@ -19,8 +20,22 @@ class App extends React.Component {
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
                 <div className="App-intro">
-                    <Form saveData={saveData} />
-                    {/* <List /> */}
+                    <div className="row">
+                        <div className="col">
+                            <div className="card">
+                                <div className="card-block">
+                                    <Form saveData={saveData} />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col">
+                            <div className="card">
+                                <div className="card-block">
+                                    <List />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         );

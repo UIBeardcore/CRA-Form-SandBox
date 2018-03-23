@@ -3,4 +3,5 @@ export default interface IItem {
     name: string;
     email: string;
     message: string;
+    isVisible?: boolean;
 }
