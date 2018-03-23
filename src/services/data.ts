@@ -7,7 +7,8 @@ class DataService {
             id: 1930,
             name: "Daffy Duck",
             email: "daffy@duck.net",
-            message: "ALACAZAM! ALACAZAM! ALACAZAM!"
+            message: "ALACAZAM! ALACAZAM! ALACAZAM!",
+            isVisible: true
         },
         {
             id: 1937,
@@ -20,6 +21,13 @@ class DataService {
             name: "Bugs Bunny",
             email: "bugs@bunny.com",
             message: "What`s up, doc?"
+        },
+        {
+            id: 1971,
+            name: "Vinny the Pooh",
+            email: "vinny@disney.net",
+            message: "Give me Honey!",
+            isVisible: false
         }
     ];
 

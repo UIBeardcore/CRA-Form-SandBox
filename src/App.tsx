@@ -5,14 +5,31 @@ import IFormData from "./interfaces/IFormData";
 import Form from "./Form";
 import List from "./List";
 
+import dataProvider from "./services/data";
+// import IItem from "./interfaces/IItem";
+
 const logo = require("./logo.svg");
 
-class App extends React.Component {
-    render() {
-        function saveData(formData: IFormData) {
-            console.log(formData);
-        }
+interface IAppState {
+    listItemsCount: number;
+}
 
+class App extends React.Component<{}, IAppState> {
+    constructor(props: {}) {
+        super(props);
+        this.state = {
+            listItemsCount: 0
+        };
+    }
+
+    public componentWillMount(): void {
+        this.setState({
+            listItemsCount: dataProvider.getData().length
+        });
+    }
+
+    render() {
+        const { listItemsCount } = this.state;
         return (
             <div className="App">
                 <header className="App-header">
@@ -24,14 +41,18 @@ class App extends React.Component {
                         <div className="col">
                             <div className="card">
                                 <div className="card-block">
-                                    <Form saveData={saveData} />
+                                    <Form
+                                        saveData={(data) =>
+                                            this.saveFormData(data)
+                                        }
+                                    />
                                 </div>
                             </div>
                         </div>
                         <div className="col">
                             <div className="card">
                                 <div className="card-block">
-                                    <List />
+                                    <List listItemsCount={listItemsCount} showOnlyVisible={true} />
                                 </div>
                             </div>
                         </div>
@@ -40,6 +61,19 @@ class App extends React.Component {
             </div>
         );
     }
+
+    saveFormData(formData: IFormData) {
+        dataProvider.saveData({
+            id: Date.now(),
+            isVisible: true,
+            ...formData
+        });
+
+        this.setState({
+            listItemsCount: dataProvider.getData().length
+        });
+    }
+
 }
 
 export default App;

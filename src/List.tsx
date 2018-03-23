@@ -1,8 +1,10 @@
 import * as React from "react";
 import IItem from "./interfaces/IItem";
+import dataProvider from "./services/data";
 
 interface IListProps {
     showOnlyVisible?: boolean;
+    listItemsCount: number;
 }
 
 interface IListState {
@@ -13,20 +15,19 @@ class List extends React.Component<IListProps, IListState> {
     constructor(props: IListProps) {
         super(props);
         this.state = {
-            listItems: [{
-                id: 1971,
-                name: "Vinny the Pooh",
-                email: "vinny@disney.net",
-                message: "Give me Honey!",
-                isVisible: false
-            }]
+            listItems: []
         };
     }
 
     public componentWillMount(): void {
         const { showOnlyVisible } = this.props;
         const { listItems: initialList } = this.state;
-        const listItems = initialList.filter(item => !showOnlyVisible || item.isVisible);
+        const data = dataProvider.getData();
+
+        const listItems = [
+            ...initialList,
+            ...data
+        ].filter(item => !showOnlyVisible || item.isVisible);
 
         this.setState({
             listItems
@@ -51,54 +52,28 @@ class List extends React.Component<IListProps, IListState> {
     }
 
     public shouldComponentUpdate(nextProps: IListProps, nextState: IListState): boolean {
-        return true;
+        if (this.props.listItemsCount !== nextProps.listItemsCount) {
+            return true;
+        } else if (this.state.listItems.length !== nextState.listItems.length) {
+            return true;
+        }
+
+        return false;
     }
 
     public componentWillUpdate(nextProps: IListProps, nextState: IListState): void {
-        // const { selectedItem, loadItemPath } = this.props;
-        // const { itemPath } = nextState;
-        // const currentId = selectedItem ? selectedItem.id : null;
-        // const nextItem = nextProps.selectedItem;
-        // const nextId = nextItem ? nextItem.id : null;
-        // if (nextItem && nextItem.url) {
-        //     if (nextId && (currentId !== nextId)) {
-        //         loadItemPath(nextItem).then(
-        //             path => {
-        //                 /* istanbul ignore else */
-        //                 if (!this._isUnmounted) {
-        //                     this.setState({
-        //                         itemPath: path,
-        //                         error: undefined
-        //                     });
-        //                 }
-        //             },
-        //             error => {
-        //                 /* istanbul ignore else */
-        //                 if (!this._isUnmounted) {
-        //                     // TODO: improve error handling
-        //                     this.setState({
-        //                         error: error
-        //                     });
-        //                 }
-        //             });
-        //     }
-        // } else if (currentId) {
-        //     const nextPath = nextItem ? [{ title: nextItem.title, url: nextItem.url } as IBreadcrumbItem] : [];
-        //     if (!itemPath || (nextPath.join("") !== itemPath.join(""))) {
-        //         this.setState({
-        //             itemPath: nextPath
-        //         });
-        //     }
-        // }
+        let listItems = dataProvider.getData();
+        listItems = listItems.filter(item => !nextProps.showOnlyVisible || item.isVisible);
+
+        this.setState({
+            listItems
+        });
     }
 
     public componentDidUpdate(): void {
-        //    this._recalculateHiddenPath();
     }
 
     public componentWillUnmount(): void {
-        //     this._isUnmounted = true;
-        //     window.removeEventListener("resize", this._recalculateHiddenPath.bind(this));
     }
 
 }
