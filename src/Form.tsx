@@ -13,6 +13,7 @@ class Form extends React.Component<IFormProps> {
         let nameInput: HTMLInputElement | null;
         let emailInput: HTMLInputElement | null;
         let messageInput: HTMLTextAreaElement | null;
+        let isVisible: HTMLInputElement | null;
 
         function onFormSubmit(event: React.FormEvent<HTMLFormElement>) {
             event.preventDefault();
@@ -20,6 +21,7 @@ class Form extends React.Component<IFormProps> {
                 name: nameInput && nameInput.value,
                 email: emailInput && emailInput.value,
                 message: messageInput && messageInput.value,
+                isVisible: isVisible && isVisible.checked
             } as IFormData);
         }
 
@@ -45,6 +47,15 @@ class Form extends React.Component<IFormProps> {
                         placeholder="Email Text"
                     />
                 </div>
+                <div className="form-group">
+                    <label>Is Visible</label>
+                    <input
+                        ref={input => (isVisible = input)}
+                        type="checkbox"
+                        className="form-control"
+                        id="input-isvisible"
+                    />
+                </div>                
                 <div className="form-group">
                     <label>Message</label>
                     <textarea ref={input => (messageInput = input)} className="form-control" id="textarea" />

@@ -52,7 +52,10 @@ class App extends React.Component<{}, IAppState> {
                         <div className="col">
                             <div className="card">
                                 <div className="card-block">
-                                    <List listItemsCount={listItemsCount} showOnlyVisible={true} />
+                                    <List 
+                                        listItemsCount={listItemsCount} 
+                                        showOnlyVisible={false} 
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -65,7 +68,6 @@ class App extends React.Component<{}, IAppState> {
     saveFormData(formData: IFormData) {
         dataProvider.saveData({
             id: Date.now(),
-            isVisible: true,
             ...formData
         });
 

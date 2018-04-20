@@ -41,7 +41,15 @@ class List extends React.Component<IListProps, IListState> {
             <ul className="list-group">
                 {
                     listItems.map((item, index) => (
-                        <li className="list-group-item" key={index}>{item.name} : {item.message}</li>
+                        <li
+                            style={{
+                                textDecoration: !item.isVisible ? "line-through" : ""
+                            }}
+                            className="list-group-item"
+                            key={index}
+                        >
+                            {item.name} : {item.message}
+                        </li>
                     ))
                 }
             </ul>
